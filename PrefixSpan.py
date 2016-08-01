@@ -5,6 +5,7 @@ from collections import defaultdict, namedtuple
 def find_frequent_item(db,min_supprot,prefix_object):
     prefix = defaultdict(lambda: 0)
     db_new = []
+    prefix_out = ''
     #print(prefix_object)
     for sequence in db:
         flattened  = [val for sublist in sequence for val in sublist]
@@ -13,6 +14,7 @@ def find_frequent_item(db,min_supprot,prefix_object):
                 prefix[item]+=1
     prefix = dict((item, support) for item, support in list(prefix.items())
         if support >= min_supprot)
+    #print(prefix)
     for sequence in db:
         for itemset in sequence:
             for item in itemset:
@@ -20,9 +22,10 @@ def find_frequent_item(db,min_supprot,prefix_object):
                     itemset.remove(item)
         db_new.append(list(filter(None, sequence)))
         
-    for prefix_item in prefix:
-        print(prefix_item)
+    for prefix_item in prefix:    
         db_object= []
+        prefix_out =  prefix_object + prefix_item
+
         for seq in db_new:
             seq_new = []
             a=0
@@ -38,14 +41,15 @@ def find_frequent_item(db,min_supprot,prefix_object):
                             itemset_n.remove(item)
                 seq_new.append(itemset_n)
                 seq_new = list(filter(None, seq_new))
+            #print(seq_new)
             if seq_new != [] and seq_new != [['_']]:
                 db_object.append(seq_new)
-                print(seq_new)
+                #print(seq_new)
         print(db_object)
-                
-        if db_object !=[]:
-            find_frequent_item(db_object,min_supprot,prefix_item)
         
+        if db_object !=[]: 
+            find_frequent_item(db_object,min_supprot,prefix_out)
+        print(prefix_out)
     return 0
 
 
