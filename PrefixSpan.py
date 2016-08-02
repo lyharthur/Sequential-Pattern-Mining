@@ -87,7 +87,7 @@ def find_frequent_item(db,min_supprot,prefix_object):
         
         
         #print(prefix_out)
-        index = [i for i in range(len(prefix_out)) if prefix_out.startswith(')', i)]
+        index = [i for i in range(len(prefix_out)) if prefix_out.startswith(')', i)] # need to fix!!
         output = prefix_out
         for ele in reversed(index):
             if index != None :
