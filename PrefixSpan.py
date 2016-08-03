@@ -87,7 +87,7 @@ def find_frequent_item(db,min_supprot,prefix_object):
         
         
         #print(prefix_out)
-        index = [i for i in range(len(prefix_out)) if prefix_out.startswith(')', i)] # need to fix!!
+        '''index = [i for i in range(len(prefix_out)) if prefix_out.startswith(')', i)] # need to fix!!
         output = prefix_out
         for ele in reversed(index):
             if index != None :
@@ -96,7 +96,7 @@ def find_frequent_item(db,min_supprot,prefix_object):
                 output = output[:int(ele)-3] + '(' + output[int(ele)-3:]
             else :
                 output = prefix_out
-        print(output)
+        #print(output)'''
 
 
         writeTXT(str(prefix_out)+'\n')
