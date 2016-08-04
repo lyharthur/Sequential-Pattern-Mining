@@ -1,8 +1,11 @@
-from collections import defaultdict, namedtuple
+from collections import defaultdict
 import time
+#import numpy as np
 
 def find_frequent_item(db,min_support,seq_pattern):
-    
+
+    #db2 = np.array(db)
+    #print(db2)
     prefix = defaultdict(lambda: 0)
     prefix_list = []
     last = seq_pattern[-1:]
@@ -98,10 +101,29 @@ def find_frequent_item(db,min_support,seq_pattern):
                 db_project.append(seq_new)
         #print(db_project)
         #print(seq_pattern,'out')
+
+        
         if db_project !=[]:
             find_frequent_item(db_project,min_support,seq_pattern)
+            
         #print(seq_pattern,'out')
-        writeTXT(str(seq_pattern)+'\n')
+
+
+        #seq_pattern output
+        out = seq_pattern[:]
+        for index,ele in enumerate(out) :
+            if ele[-1:] ==')' :
+                out[index-1] = '('+ out[index-1]
+                if out[index-1][-1:] ==')':
+                    out[index-1] = out[index-1][1:-1]
+                    
+                
+                
+        output = ''.join(out)
+        #print(output)
+        
+        
+        writeTXT(output+'\n')
         
         seq_pattern.pop()
 ##    end2 = time.time()
