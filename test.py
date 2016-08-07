@@ -1,6 +1,5 @@
-import csv
 import time
-from broken import make_sequence ,find_frequent_item
+from prefixspan_newC import make_sequence ,find_frequent_item
 
 start = time.time()
 data= []
@@ -17,7 +16,7 @@ with open(filename1) as f:
 f = open('out.txt','w')
 f.write('')
 db = make_sequence(data)
-find_frequent_item(db,1000,[])
+find_frequent_item(db,48,[])
 
 
 

@@ -1,0 +1,51 @@
+a c c
+a c b
+a c
+a a
+(a b c) a
+(a b c)
+(a b) a
+(a b) d c
+(a b) d
+(a b) f
+(a b) c
+(a b)
+a d c
+a d
+a f
+a b
+a
+d c b
+d c
+d b
+d
+c c
+c a
+c b
+c
+(b c) a
+(b c)
+b a
+b d c
+b d
+b f
+b c
+b
+e a c b
+e a c
+e a b
+e a
+e f c b
+e f c
+e f b
+e f
+e c b
+e c
+e b c
+e b
+e
+f c b
+f c
+f b c
+f b
+f

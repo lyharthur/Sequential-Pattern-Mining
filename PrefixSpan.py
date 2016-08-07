@@ -1,4 +1,5 @@
 from collections import defaultdict, namedtuple
+import time
 
 def find_frequent_item(db,min_supprot,prefix_object):
     prefix = defaultdict(lambda: 0)
@@ -16,10 +17,9 @@ def find_frequent_item(db,min_supprot,prefix_object):
             itemset_tmp = []
             if ('_' in itemset or suff in itemset) and a == 0: #a :one seq only one change
                 a=1
-                for item in reversed(itemset):
+                for index,item in enumerate(reversed(itemset)):
                     item_new = str()
-                    if item != '_' and item != suff and item[-1:] != ')' :
-                        
+                    if item != '_' and item != suff and item[-1:] != ')'and itemset[index+1] == suff :
                         item_new = item + ')'
                         if item in itemset_new:
                                 itemset_new.remove(item)
@@ -39,7 +39,7 @@ def find_frequent_item(db,min_supprot,prefix_object):
                 prefix[item]+=1
     prefix = dict((item, support) for item, support in list(prefix.items())
         if support >= min_supprot)
-    #print(prefix)
+    print(prefix)
     release_list(db)
     
     db_new2 = []
@@ -79,24 +79,14 @@ def find_frequent_item(db,min_supprot,prefix_object):
                 db_object.append(seq_new)
                 #print(seq_new)
         
-        
+        print(db_object)
+
         if db_object !=[]:
-            #print(db_object)
             find_frequent_item(db_object,min_supprot,prefix_out)
         
         
         
         #print(prefix_out)
-        '''index = [i for i in range(len(prefix_out)) if prefix_out.startswith(')', i)] # need to fix!!
-        output = prefix_out
-        for ele in reversed(index):
-            if index != None :
-                if output[int(ele)] == '(':
-                    output = output[:int(ele)] + output[int(ele)+2:]
-                output = output[:int(ele)-3] + '(' + output[int(ele)-3:]
-            else :
-                output = prefix_out
-        #print(output)'''
 
 
         writeTXT(str(prefix_out)+'\n')
@@ -151,3 +141,26 @@ def make_sequence(db):
 def release_list(d):
    del d[:]
    del d
+
+if __name__ == '__main__':
+    start = time.time()
+    data= []
+    filename1 = 'C50S10T2.5N10000.ascii'
+    filename2 = 'abc.txt'
+    with open(filename2) as f:
+        for line in f:
+            line = line.replace('\n','')
+            line = line.split(' ')
+            while '' in line: line.remove('')
+            data.append(line)
+
+
+    f = open('out.txt','w')
+    f.write('')
+    db = make_sequence(data)
+    find_frequent_item(db,2,'')
+    
+    
+    end = time.time()
+    elapsed = end - start
+    print( "Time taken: ", elapsed, "seconds.")
