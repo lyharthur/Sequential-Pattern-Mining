@@ -2,7 +2,7 @@ from collections import defaultdict
 import time
 
 
-def find_frequent_item(db,min_support,seq_pattern):
+def find_frequent_item(db,min_support,seq_pattern,count):
 
     #db2 = np.array(db)
     #print(db2)
@@ -111,9 +111,9 @@ def find_frequent_item(db,min_support,seq_pattern):
         #print(db_project)
         #print(seq_pattern,'out')
 
-
+        count += 1
         if db_project !=[]:
-            find_frequent_item(db_project,min_support,seq_pattern)
+            count = find_frequent_item(db_project,min_support,seq_pattern,count)
             
             #print(seq_pattern,'out')
 
@@ -139,7 +139,8 @@ def find_frequent_item(db,min_support,seq_pattern):
 ##    elapsed2 = end2 - start2
 ##    print( "FOR(2) Time taken: ", elapsed2, "seconds.")
     release_list(db)
-    return 
+    
+    return count
 
 
 def writeTXT(t):
@@ -156,6 +157,7 @@ def make_sequence(db):
     items = defaultdict(lambda: 0)
     transactions_done = []
     i = 0
+    seq_num = 0
     for id_list in db:
         try:
             if db[i][0] == db[i+1][0]:
@@ -176,6 +178,7 @@ def make_sequence(db):
                 sequence.append(itemset)
                 itemset = []
                 sequence_done.append(sequence)
+                seq_num += 1
                 sequence = []
            
         except IndexError:
@@ -184,10 +187,11 @@ def make_sequence(db):
             sequence.append(itemset)
             itemset = []
             sequence_done.append(sequence)
+            seq_num += 1
             sequence = []
         i += 1
         
-    return sequence_done
+    return sequence_done,seq_num
 
 def release_list(d):
    del d[:]
@@ -209,8 +213,11 @@ if __name__ == '__main__':
 
     f = open('out.txt','w')
     f.write('')
-    db = make_sequence(data)
-    find_frequent_item(db,50,[])
+    (db,num) = make_sequence(data)
+    min_support = 0.1/100
+    
+    print("Total Sequence num: " + str(num))
+    print('Total Seq PATTERN num :'+ str(find_frequent_item(db,num*min_support,[],0))+ " when min_support rate = "+ str(min_support))
 
 
     end = time.time()
