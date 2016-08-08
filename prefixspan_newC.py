@@ -22,7 +22,7 @@ def find_frequent_item(db,min_support,seq_pattern):
             for index,item in enumerate(itemset):
                 if item == '_' :
                     has_ = 1
-                if item != '_' :
+                else :
                     #for item1 in itemset[:index+1]:
                     itemnew = item + ')'
                     if (check_pre == 1 or has_ == 1)  and prefix[itemnew] < min_support and seq_done[itemnew] == 0:
@@ -37,15 +37,15 @@ def find_frequent_item(db,min_support,seq_pattern):
                         if prefix[item] >= min_support:
                             prefix_list.append(item)
                 
-                #if prefix in itemset :
+                    #if prefix in itemset :
                     if check_pre == 0:
                         for pattern in reversed(seq_pattern):
-                            if itemset[index] == pattern or itemset[index] == pattern[:-1]:
+                            if itemset[index] == pattern or (itemset[index] == pattern[:-1] and pattern[-1:] == ')'):
                                 has_last['o'] = 1
                                 has_last[str(pattern)] = 1
                             else:
                                 has_last[str(pattern)] = 0
-                        #print(pattern)
+                            #print(pattern)
                             
                             #print('lsitfor', itemset[index]  , has_last[str(pattern)])
                             index -= index
@@ -55,8 +55,8 @@ def find_frequent_item(db,min_support,seq_pattern):
                         if all(i == 1 for i in has_last.values()):
                             check_pre = 1
 
-#if prefix_list != []:
-#       print(prefix_list,'plist')
+    #if prefix_list != []:
+     #print(prefix_list,'plist')
 
 ##    end1 = time.time()
 ##    elapsed1 = end1 - start1
@@ -85,15 +85,15 @@ def find_frequent_item(db,min_support,seq_pattern):
                             has_ = 1
                         if seq_pattern[-2:-1] == [item]:
                             has_pre = 1
-                                #print(seq_pattern[-2:-1],[item],has_,has_pre)
+                        #print(seq_pattern[-2:-1],[item],prefix,has_,has_pre)
                         
                         if((item == prefix[:-1] and prefix[-1:] == ')') or (item == prefix) ):
-                            if prefix[-1:]==')' and(has_== 1 or has_pre == 1 or new == 1):
+                            if prefix[-1:]==')' and (has_== 1 or has_pre == 1 or new == 1):
                                 #print(item,prefix)
                                 itemset_new[itemset_new.index(item)] = '_'
                                 a=1
                                 break
-                            elif (has_== 0) :
+                            elif (has_== 0) and  prefix[-1:] != ')' :
                                 itemset_new[itemset_new.index(item)] = '_'
                                 a=1
                                 break
@@ -198,8 +198,8 @@ if __name__ == '__main__':
     start = time.time()
     data= []
     filename1 = 'C50S10T2.5N10000.ascii'
-    filename2 = 'abc copy.txt'
-    with open(filename2) as f:
+    filename2 = 'abc.txt'
+    with open(filename1) as f:
         for line in f:
             line = line.replace('\n','')
             line = line.split(' ')
@@ -210,10 +210,9 @@ if __name__ == '__main__':
     f = open('out.txt','w')
     f.write('')
     db = make_sequence(data)
-    find_frequent_item(db,2,[])
+    find_frequent_item(db,50,[])
 
 
     end = time.time()
     elapsed = end - start
     print( "Time taken: ", elapsed, "seconds.")
-
