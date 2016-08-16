@@ -214,10 +214,10 @@ if __name__ == '__main__':
     f = open('out.txt','w')
     f.write('')
     (db,num) = make_sequence(data)
-    min_support = 0.1/100
+    min_support_rate = float(sys.argv[1])/100
     
     print("Total Sequence num: " + str(num))
-    print('Total Seq PATTERN num :'+ str(find_frequent_item(db,num*min_support,[],0))+ " when min_support rate = "+ str(min_support))
+    print('Total Seq PATTERN num :'+ str(find_frequent_item(db,num*min_support_rate,[],0))+ " when min_support rate = "+ str(min_support_rate))
 
 
     end = time.time()
